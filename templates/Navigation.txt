@@ -1,7 +1,0 @@
-
-
-# 주요 페이지 경로
-
-# 로그인 페이지 : AutoCArD_dev\templates\bootstrap-4.0.0\docs\4.0\examples\sign-in\index.html
-
-# 메인 페이지 : AutoCArD_dev\templates\startbootstrap-freelancer-gh-pages\index.html
