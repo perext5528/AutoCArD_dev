@@ -7,6 +7,9 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Dev_app.views.home, name="home"),
+    path('', Dev_app.views.home, name="index"),
+    path('login/', Dev_app.views.login, name="login"),
+    path('register/', Dev_app.views.Register.as_view(), name="register"),
+    path('logout/', Dev_app.views.logout, name="logout")
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
