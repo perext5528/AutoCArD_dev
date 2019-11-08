@@ -1,13 +1,24 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
 from django.views.generic import View, ListView, DetailView
-from Dev_app.models import *
-
+from .forms import Post_text
 from django.contrib.auth.models import User
 from django.contrib import auth
+
+
+
 # Create your views here.
 
 def home(request):
-    return render(request, 'index.html')
+    if request.method == 'POST':
+        form = Post_text(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+
+        return redirect('loading')
+    else:
+        form = Post_text()
+    return render(request, 'index.html', {'form': form})
+
 
 def login(request):
     if request.method == 'POST':
@@ -22,11 +33,13 @@ def login(request):
     else:
         return render(request, 'login.html')
 
+
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
         return redirect('index')
     return render(request, 'index.html')
+
 
 class Register(View):
     def get(self, request):
@@ -36,7 +49,8 @@ class Register(View):
         if request.POST['password'] == request.POST['password_verify']:
             try:
                 if not User.objects.filter(email=request.POST['email']):
-                    user = User.objects.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['password'])
+                    user = User.objects.create_user(username=request.POST['username'], email=request.POST['email'],
+                                                    password=request.POST['password'])
                     # advanced_user = AdvancedUser(user_id=user.id)
                     # advanced_user.save()
                     auth.login(request, user)
@@ -46,3 +60,15 @@ class Register(View):
                 return render(request, 'register.html')
             return redirect('index')
         return render(request, 'register.html')
+
+
+def post_text(request):
+    if request.method == 'POST':
+        form = Post_text(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            return render(request, 'image.html')
+
+    else:
+        form = Post_text()
+        return render(request, 'image.html', {'form': form})

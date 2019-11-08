@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     #앱 등록
     'Dev_app.apps.DevAppConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
